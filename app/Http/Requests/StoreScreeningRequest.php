@@ -11,7 +11,7 @@ class StoreScreeningRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class StoreScreeningRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'movie_id' => 'required|exists:movies,id',
+            'screen' => 'required|string',
+            'total_seats' => 'required|string',
+            'date_and_time' => 'required|date_format:d-m-Y',
         ];
     }
 }

@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Movie;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class MoviePolicy
 {
@@ -13,7 +12,7 @@ class MoviePolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +20,7 @@ class MoviePolicy
      */
     public function view(User $user, Movie $movie): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -29,7 +28,7 @@ class MoviePolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->role == 'ADMIN';
     }
 
     /**
@@ -37,7 +36,7 @@ class MoviePolicy
      */
     public function update(User $user, Movie $movie): bool
     {
-        //
+        return $user->role == 'ADMIN';
     }
 
     /**
@@ -45,7 +44,7 @@ class MoviePolicy
      */
     public function delete(User $user, Movie $movie): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +52,7 @@ class MoviePolicy
      */
     public function restore(User $user, Movie $movie): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -61,6 +60,6 @@ class MoviePolicy
      */
     public function forceDelete(User $user, Movie $movie): bool
     {
-        //
+        return true;
     }
 }

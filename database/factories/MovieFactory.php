@@ -17,7 +17,11 @@ class MovieFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => $this->faker->sentence,
+            'duration' => $this->faker->numberBetween(60, 180),
+            'genre' => $this->faker->randomElement(['Action', 'Comedy', 'Drama', 'Sci-Fi', 'Thriller']),
+            'description' => $this->faker->paragraph,
+            'rating' => $this->faker->randomFloat(1, 1, 5),
         ];
     }
 }

@@ -2,16 +2,25 @@
 
 namespace App\Models;
 
-use App\Models\Movie;
-use Laravel\Scout\Searchable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Screening extends Model
 {
-    use HasFactory, Searchable;
+    use HasFactory;
 
-    protected $fillable = ['screen', 'seats_available', 'date_and_time'];
+    protected $fillable = ['movie_id', 'screen', 'total_seats', 'date_and_time'];
+
+    protected $with = ['movie'];
+
+    protected $withCount = ['bookings'];
+
+    protected $appends = ['seats_taken', 'seats_left'];
+
+    protected $casts = [
+        'date_and_time' => 'datetime',
+    ];
 
     /**
      * Get the movie for the screening.
@@ -20,29 +29,24 @@ class Screening extends Model
      */
     public function movie()
     {
-        return $this->belongsTo(Movie::class);
+        return $this->belongsTo(Movie::class, 'movie_id', 'id');
     }
 
     /**
-     * Get the searchable attributes for the screening.
-     *
-     * @return array
+     * Get all of the bookings for the Screening
      */
-    public function toSearchableArray()
+    public function bookings(): HasMany
     {
-        return [
-            'title' => $this->movie->title,
-            'genre' => $this->movie->genre,
-        ];
+        return $this->hasMany(Booking::class);
     }
 
-    /**
-     * Get the index name for the model.
-     *
-     * @return string
-     */
-    public function searchableAs()
+    protected function getSeatsTakenAttribute()
     {
-        return 'screenings_index';
+        return $this->bookings_count;
+    }
+
+    protected function getSeatsLeftAttribute()
+    {
+        return $this->total_seats - $this->bookings_count;
     }
 }

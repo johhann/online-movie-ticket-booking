@@ -13,7 +13,7 @@ class ScreeningController extends Controller
      */
     public function index()
     {
-        return Screening::paginate(15);
+        return Screening::latest()->paginate(15);
     }
 
     /**
@@ -24,11 +24,11 @@ class ScreeningController extends Controller
         $screening = Screening::create([
             'movie_id' => $request->movie_id,
             'screen' => $request->screen,
-            'seats_available' => $request->seats_available,
+            'total_seats' => $request->total_seats,
             'date_and_time' => $request->date_and_time,
         ]);
 
-        return $screening;
+        return $screening->fresh();
     }
 
     /**
@@ -47,11 +47,11 @@ class ScreeningController extends Controller
         $screening->update([
             'movie_id' => $request->movie_id,
             'screen' => $request->screen,
-            'seats_available' => $request->seats_available,
+            'total_seats' => $request->total_seats,
             'date_and_time' => $request->date_and_time,
         ]);
 
-        return $screening;
+        return $screening->fresh();
     }
 
     /**

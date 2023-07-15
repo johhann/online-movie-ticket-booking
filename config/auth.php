@@ -112,11 +112,9 @@ return [
 
     'password_timeout' => 10800,
 
-
     /**
      * Secret key to hash user token
      */
     'secret_key' => env('SECRET_KEY', 'secret-key'),
-
 
 ];

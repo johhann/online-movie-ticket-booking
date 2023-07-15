@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\MovieNotFoundException;
 use App\Http\Requests\StoreMovieRequest;
 use App\Http\Requests\UpdateMovieRequest;
 use App\Models\Movie;
@@ -21,6 +22,8 @@ class MovieController extends Controller
      */
     public function store(StoreMovieRequest $request): mixed
     {
+        $this->authorize('create'); // check if user is admin
+
         $movie = Movie::create([
             'title' => $request->title,
             'description' => $request->description,
@@ -35,32 +38,52 @@ class MovieController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Movie $movie): Movie
+    public function show($movieId): Movie
     {
-        return $movie;
+        $movie = Movie::where('id', $movieId)->first();
+
+        if ($movie) {
+            return $movie;
+        }
+
+        throw new MovieNotFoundException();
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMovieRequest $request, Movie $movie)
+    public function update(UpdateMovieRequest $request, $movieId)
     {
-        $movie->update([
-            'title' => $request->title,
-            'description' => $request->description,
-            'genre' => $request->genre,
-            'duration' => $request->duration,
-            'rating' => $request->rating,
-        ]);
+        $movie = Movie::where('id', $movieId)->first();
 
-        return $movie;
+        if ($movie) {
+            $this->authorize('update', $movie); // check if user is admin
+
+            $movie->update([
+                'title' => $request->title,
+                'description' => $request->description,
+                'genre' => $request->genre,
+                'duration' => $request->duration,
+                'rating' => $request->rating,
+            ]);
+
+            return $movie;
+        }
+
+        throw new MovieNotFoundException();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Movie $movie): bool
+    public function destroy($movieId): bool
     {
-        return $movie->delete();
+        $movie = Movie::where('id', $movieId)->first();
+
+        if ($movie) {
+            return $movie->delete();
+        }
+
+        throw new MovieNotFoundException();
     }
 }

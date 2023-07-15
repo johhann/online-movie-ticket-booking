@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Screening;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class ScreeningPolicy
 {
@@ -13,7 +12,7 @@ class ScreeningPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +20,7 @@ class ScreeningPolicy
      */
     public function view(User $user, Screening $screening): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -29,7 +28,7 @@ class ScreeningPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -37,7 +36,7 @@ class ScreeningPolicy
      */
     public function update(User $user, Screening $screening): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -45,7 +44,7 @@ class ScreeningPolicy
      */
     public function delete(User $user, Screening $screening): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +52,7 @@ class ScreeningPolicy
      */
     public function restore(User $user, Screening $screening): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -61,6 +60,6 @@ class ScreeningPolicy
      */
     public function forceDelete(User $user, Screening $screening): bool
     {
-        //
+        return true;
     }
 }

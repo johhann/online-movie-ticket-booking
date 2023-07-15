@@ -13,23 +13,30 @@ class ScreeningController extends Controller
      */
     public function index()
     {
-        //
+        return Screening::paginate(15);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreScreeningRequest $request)
+    public function store(StoreScreeningRequest $request): mixed
     {
-        //
+        $screening = Screening::create([
+            'movie_id' => $request->movie_id,
+            'screen' => $request->screen,
+            'seats_available' => $request->seats_available,
+            'date_and_time' => $request->date_and_time,
+        ]);
+
+        return $screening;
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Screening $screening)
+    public function show(Screening $screening): Screening
     {
-        //
+        return $screening;
     }
 
     /**
@@ -37,14 +44,21 @@ class ScreeningController extends Controller
      */
     public function update(UpdateScreeningRequest $request, Screening $screening)
     {
-        //
+        $screening->update([
+            'movie_id' => $request->movie_id,
+            'screen' => $request->screen,
+            'seats_available' => $request->seats_available,
+            'date_and_time' => $request->date_and_time,
+        ]);
+
+        return $screening;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Screening $screening)
+    public function destroy(Screening $screening): bool
     {
-        //
+        return $screening->delete();
     }
 }

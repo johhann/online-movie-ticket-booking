@@ -2,6 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\MovieController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\ScreeningController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +18,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('login', [AuthController::class, 'login']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::delete('logout', [AuthController::class, 'logout']);
+    Route::get('profile', [AuthController::class, 'profile']);
+
+    // RESTfull routes
+    Route::apiResources([
+        'users' => UserController::class,
+        'movies' => MovieController::class,
+        'screenings' => ScreeningController::class,
+    ]);
 });

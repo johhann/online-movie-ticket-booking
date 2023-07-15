@@ -13,23 +13,31 @@ class MovieController extends Controller
      */
     public function index()
     {
-        //
+        return Movie::paginate(15);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreMovieRequest $request)
+    public function store(StoreMovieRequest $request): mixed
     {
-        //
+        $movie = Movie::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'genre' => $request->genre,
+            'duration' => $request->duration,
+            'rating' => $request->rating,
+        ]);
+
+        return $movie;
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Movie $movie)
+    public function show(Movie $movie): Movie
     {
-        //
+        return $movie;
     }
 
     /**
@@ -37,14 +45,22 @@ class MovieController extends Controller
      */
     public function update(UpdateMovieRequest $request, Movie $movie)
     {
-        //
+        $movie->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'genre' => $request->genre,
+            'duration' => $request->duration,
+            'rating' => $request->rating,
+        ]);
+
+        return $movie;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Movie $movie)
+    public function destroy(Movie $movie): bool
     {
-        //
+        return $movie->delete();
     }
 }

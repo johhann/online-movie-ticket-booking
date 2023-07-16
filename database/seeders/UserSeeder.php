@@ -13,5 +13,13 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::factory(100)->create();
+
+        $user = User::where('role', 'USER')->first();
+        $user->username = 'user';
+        $user->save();
+
+        $admin = User::where('role', 'ADMIN')->first();
+        $admin->username = 'admin';
+        $admin->save();
     }
 }

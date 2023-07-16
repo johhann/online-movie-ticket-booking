@@ -9,6 +9,11 @@ use App\Models\Movie;
 
 class MovieController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Movie::class, 'movie');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -22,8 +27,6 @@ class MovieController extends Controller
      */
     public function store(StoreMovieRequest $request): mixed
     {
-        $this->authorize('create'); // check if user is admin
-
         $movie = Movie::create([
             'title' => $request->title,
             'description' => $request->description,
@@ -52,23 +55,21 @@ class MovieController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMovieRequest $request, $movieId)
+    public function update(UpdateMovieRequest $request, Movie $movie)
     {
-        $movie = Movie::where('id', $movieId)->first();
-
-        if ($movie) {
-            $this->authorize('update', $movie); // check if user is admin
-
-            $movie->update([
-                'title' => $request->title,
-                'description' => $request->description,
-                'genre' => $request->genre,
-                'duration' => $request->duration,
-                'rating' => $request->rating,
-            ]);
-
-            return $movie;
+        if (!$movie) {
+            throw new MovieNotFoundException();
         }
+
+        $movie->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'genre' => $request->genre,
+            'duration' => $request->duration,
+            'rating' => $request->rating,
+        ]);
+
+        return $movie;
 
         throw new MovieNotFoundException();
     }

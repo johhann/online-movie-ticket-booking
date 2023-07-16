@@ -3,6 +3,16 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+
+use App\Models\User;
+use App\Models\Movie;
+use App\Models\Booking;
+use App\Models\Screening;
+use App\Policies\UserPolicy;
+use App\Policies\MoviePolicy;
+use App\Policies\BookingPolicy;
+use App\Policies\ScreeningPolicy;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -13,7 +23,10 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+        User::class => UserPolicy::class,
+        Movie::class => MoviePolicy::class,
+        Screening::class => ScreeningPolicy::class,
+        Booking::class => BookingPolicy::class,
     ];
 
     /**
@@ -21,6 +34,9 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+
+        $this->registerPolicies();
+
+        Gate::resource('booking', BookingPolicy::class);
     }
 }

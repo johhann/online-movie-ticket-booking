@@ -28,7 +28,7 @@ class ScreeningPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->role === 'ADMIN';
     }
 
     /**
@@ -36,7 +36,7 @@ class ScreeningPolicy
      */
     public function update(User $user, Screening $screening): bool
     {
-        return true;
+        return $user->role === 'ADMIN';
     }
 
     /**
@@ -44,7 +44,7 @@ class ScreeningPolicy
      */
     public function delete(User $user, Screening $screening): bool
     {
-        return true;
+        return $user->role === 'ADMIN';
     }
 
     /**
@@ -52,7 +52,7 @@ class ScreeningPolicy
      */
     public function restore(User $user, Screening $screening): bool
     {
-        return true;
+        return $user->role === 'ADMIN';
     }
 
     /**
@@ -60,6 +60,6 @@ class ScreeningPolicy
      */
     public function forceDelete(User $user, Screening $screening): bool
     {
-        return true;
+        return $user->role === 'ADMIN';
     }
 }

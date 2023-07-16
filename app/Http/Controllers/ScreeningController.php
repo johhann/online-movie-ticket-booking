@@ -8,6 +8,11 @@ use App\Models\Screening;
 
 class ScreeningController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Screening::class, 'screening');
+    }
+
     /**
      * Display a listing of the resource.
      */

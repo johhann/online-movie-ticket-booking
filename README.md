@@ -1,66 +1,89 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Online Movie Ticket Booking API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Online Movie Ticket Booking API is a RESTful API that provides endpoints for managing movie ticket bookings. It allows clients to perform various operations, such as retrieving movies, screening schedules, and booking tickets.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- User Registration and Authentication: Users can create an account and authenticate themselves to access the booking functionality.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Movie Listing: The API provides endpoints to retrieve a list of available movies, including their titles, genres, descriptions, and ratings.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Screening Schedules: Clients can retrieve the schedules for movie screenings, including the screen, date and time, and available seats.
 
-## Learning Laravel
+- Booking Tickets: Clients can book tickets for a specific movie screening and select the desired number of seats.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Technologies Used
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- Laravel: A PHP framework used for developing the API.
+- MySQL: A relational database management system used for storing application data.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Installation
 
-## Laravel Sponsors
+1. Clone the repository:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+   ```bash
+   git clone <repository-url>
+2. Install the dependencies:
 
-### Premium Partners
+    ```bash
+    composer install
+3. Create a new MySQL database for the application.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+4. Rename the .env.example file to .env and update the database connection details.
+
+5. Generate an application key:
+    ```bash
+    php artisan key:generate
+6. Run the database migrations:
+
+    ```bash
+    php artisan migrate
+7. Start the development server:
+
+    ```bash
+    php artisan serve
+## API Endpoints
+### Authentication Endpoints
+- POST /api/users: Register a new user account.
+- POST /api/login: Log in and retrieve an authentication token.
+- GET /api/logout: Log in and retrieve an authentication token.
+
+### User Endpoints
+
+- **GET /api/users**: Retrieve a list of all users.
+- **GET /api/users/{id}**: Retrieve a specific user by ID.
+- **POST /api/users**: Create a new user.
+- **PUT /api/users/{id}**: Update a specific user by ID.
+- **DELETE /api/users/{id}**: Delete a specific user by ID.
+
+### Movie Endpoints
+
+- **GET /api/movies**: Retrieve a list of available movies.
+- **GET /api/movies/{id}**: Retrieve a specific movie by ID.
+- **POST /api/movies**: Create a new movie.
+- **PUT /api/movies/{id}**: Update a specific movie by ID.
+- **DELETE /api/movies/{id}**: Delete a specific movie by ID.
+
+### Screening Endpoints
+
+- **GET /api/screenings**: Retrieve a list of available screening schedules.
+- **GET /api/screenings/{id}**: Retrieve a specific screening schedule by ID.
+- **POST /api/screenings**: Create a new screening schedule.
+- **PUT /api/screenings/{id}**: Update a specific screening schedule by ID.
+- **DELETE /api/screenings/{id}**: Delete a specific screening schedule by ID.
+
+### Booking Endpoints
+
+- **GET /api/bookings**: Retrieve a list of user bookings.
+- **GET /api/bookings/{id}**: Retrieve a specific booking by ID.
+- **POST /api/bookings**: Book tickets for a specific screening.
+- **PUT /api/bookings/{id}**: Update a specific booking by ID.
+- **DELETE /api/bookings/{id}**: Delete a specific booking by ID.
+
+Please refer to the API documentation for detailed information on request and response formats for each endpoint.
 
 ## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
 
 ## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).

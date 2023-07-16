@@ -2,11 +2,11 @@
 
 namespace Tests\Unit\Http\Controllers;
 
-use Hash;
 use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Http\Response;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Controllers\UserController;
 use App\Http\Requests\UpdateUserRequest;

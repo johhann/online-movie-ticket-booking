@@ -2,18 +2,14 @@
 
 namespace Tests\Unit\Http\Controllers;
 
-use Tests\TestCase;
-use App\Models\User;
-use Illuminate\Http\Response;
-use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\StoreUserRequest;
 use App\Http\Controllers\UserController;
+use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Auth\Access\AuthorizationException;
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Hash;
+use Tests\TestCase;
 
 class UserControllerTest extends TestCase
 {
@@ -40,7 +36,7 @@ class UserControllerTest extends TestCase
         $request = new StoreUserRequest([
             'username' => $this->faker->userName,
             'role' => 'user',
-            'password' => $this->faker->password
+            'password' => $this->faker->password,
         ]);
         $response = (new UserController())->store($request);
         $this->assertEquals($request->username, $response->username);
@@ -69,7 +65,7 @@ class UserControllerTest extends TestCase
         $request = new UpdateUserRequest([
             'username' => $newUsername,
             'role' => $newRole,
-            'password' => $newPassword
+            'password' => $newPassword,
         ]);
 
         $response = (new UserController())->update($request, $user);

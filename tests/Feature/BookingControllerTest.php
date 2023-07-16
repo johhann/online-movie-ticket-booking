@@ -2,17 +2,16 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use App\Models\User;
+use App\Exceptions\NoSeatsAvailableException;
+use App\Http\Controllers\BookingController;
+use App\Http\Requests\StoreBookingRequest;
+use App\Http\Requests\UpdateBookingRequest;
 use App\Models\Booking;
 use App\Models\Screening;
-use App\Http\Requests\StoreBookingRequest;
-use App\Http\Controllers\BookingController;
-use App\Http\Requests\UpdateBookingRequest;
-use Illuminate\Foundation\Testing\WithFaker;
-use App\Exceptions\NoSeatsAvailableException;
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
 
 class BookingControllerTest extends TestCase
 {
@@ -76,8 +75,6 @@ class BookingControllerTest extends TestCase
 
         $response->assertStatus(200);
     }
-
-
 
     /** @test */
     public function update_method_updates_requested_booking()

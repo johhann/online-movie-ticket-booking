@@ -15,7 +15,9 @@ class UserController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the users.
+     *
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function index()
     {
@@ -23,9 +25,12 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created user in storage.
+     *
+     * @param  StoreUserRequest  $request The store user request.
+     * @return User The created user.
      */
-    public function store(StoreUserRequest $request): mixed
+    public function store(StoreUserRequest $request): User
     {
         $user = User::create([
             'username' => $request->username,
@@ -37,7 +42,10 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified user.
+     *
+     * @param  User  $user The user to display.
+     * @return User The specified user.
      */
     public function show(User $user): User
     {
@@ -45,9 +53,13 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified user in storage.
+     *
+     * @param  UpdateUserRequest  $request The update user request.
+     * @param  User  $user The user to update.
+     * @return User The updated user.
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, User $user): User
     {
         $user->update([
             'username' => $request->username,
@@ -59,7 +71,10 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified user from storage.
+     *
+     * @param  User  $user The user to remove.
+     * @return bool True if the user is successfully deleted, false otherwise.
      */
     public function destroy(User $user): bool
     {

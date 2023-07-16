@@ -2,18 +2,15 @@
 
 namespace Tests\Unit\Http\Controllers;
 
-use Tests\TestCase;
-use App\Models\User;
-use App\Models\Movie;
-use Illuminate\Http\Response;
-use App\Http\Requests\StoreMovieRequest;
-use App\Http\Controllers\MovieController;
-use App\Http\Requests\UpdateMovieRequest;
 use App\Exceptions\MovieNotFoundException;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Auth\Access\AuthorizationException;
+use App\Http\Controllers\MovieController;
+use App\Http\Requests\StoreMovieRequest;
+use App\Http\Requests\UpdateMovieRequest;
+use App\Models\Movie;
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
 
 class MovieControllerTest extends TestCase
 {
@@ -42,7 +39,7 @@ class MovieControllerTest extends TestCase
             'description' => $this->faker->paragraph,
             'genre' => $this->faker->word,
             'duration' => $this->faker->numberBetween(60, 180),
-            'rating' => $this->faker->numberBetween(1, 5)
+            'rating' => $this->faker->numberBetween(1, 5),
         ]);
         $response = (new MovieController())->store($request);
         $this->assertEquals($request->title, $response->title);
@@ -85,7 +82,7 @@ class MovieControllerTest extends TestCase
             'description' => $newDescription,
             'genre' => $newGenre,
             'duration' => $newDuration,
-            'rating' => $newRating
+            'rating' => $newRating,
         ]);
 
         $response = (new MovieController())->update($request, $movie);
@@ -96,7 +93,6 @@ class MovieControllerTest extends TestCase
         $this->assertEquals($newRating, $response->rating);
         $this->assertInstanceOf(Movie::class, $response);
     }
-
 
     /** @test */
     public function destroy_method_deletes_requested_movie()

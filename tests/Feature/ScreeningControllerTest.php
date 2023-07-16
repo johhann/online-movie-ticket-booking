@@ -2,16 +2,14 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use App\Models\User;
-use App\Models\Screening;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Pagination\LengthAwarePaginator;
+use App\Http\Controllers\ScreeningController;
 use App\Http\Requests\StoreScreeningRequest;
 use App\Http\Requests\UpdateScreeningRequest;
-use App\Http\Controllers\ScreeningController;
+use App\Models\Screening;
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
 
 class ScreeningControllerTest extends TestCase
 {
@@ -54,7 +52,7 @@ class ScreeningControllerTest extends TestCase
     public function show_method_returns_requested_screening()
     {
         $screening = Screening::factory()->create();
-        $response = $this->actingAs(User::factory()->create(['role' => 'ADMIN']))->get('/api/screenings/' . $screening->id);
+        $response = $this->actingAs(User::factory()->create(['role' => 'ADMIN']))->get('/api/screenings/'.$screening->id);
 
         $this->assertEquals($screening->id, $response->json('id'));
         $this->assertInstanceOf(Screening::class, $response->original);

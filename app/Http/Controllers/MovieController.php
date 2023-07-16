@@ -15,7 +15,9 @@ class MovieController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the movies.
+     *
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function index()
     {
@@ -23,9 +25,12 @@ class MovieController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created movie in storage.
+     *
+     * @param  StoreMovieRequest  $request The store movie request.
+     * @return Movie The created movie.
      */
-    public function store(StoreMovieRequest $request): mixed
+    public function store(StoreMovieRequest $request): Movie
     {
         $movie = Movie::create([
             'title' => $request->title,
@@ -39,11 +44,16 @@ class MovieController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified movie.
+     *
+     * @param  int  $movieId The movie ID.
+     * @return Movie The specified movie.
+     *
+     * @throws MovieNotFoundException If the movie is not found.
      */
-    public function show($movieId): Movie
+    public function show(int $movieId): Movie
     {
-        $movie = Movie::where('id', $movieId)->first();
+        $movie = Movie::find($movieId);
 
         if ($movie) {
             return $movie;
@@ -53,11 +63,17 @@ class MovieController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified movie in storage.
+     *
+     * @param  UpdateMovieRequest  $request The update movie request.
+     * @param  Movie  $movie The movie to update.
+     * @return Movie The updated movie.
+     *
+     * @throws MovieNotFoundException If the movie is not found.
      */
-    public function update(UpdateMovieRequest $request, Movie $movie)
+    public function update(UpdateMovieRequest $request, Movie $movie): Movie
     {
-        if (!$movie) {
+        if (! $movie) {
             throw new MovieNotFoundException();
         }
 
@@ -70,16 +86,19 @@ class MovieController extends Controller
         ]);
 
         return $movie;
-
-        throw new MovieNotFoundException();
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified movie from storage.
+     *
+     * @param  int  $movieId The movie ID.
+     * @return bool True if the movie is successfully deleted, false otherwise.
+     *
+     * @throws MovieNotFoundException If the movie is not found.
      */
-    public function destroy($movieId): bool
+    public function destroy(int $movieId): bool
     {
-        $movie = Movie::where('id', $movieId)->first();
+        $movie = Movie::find($movieId);
 
         if ($movie) {
             return $movie->delete();

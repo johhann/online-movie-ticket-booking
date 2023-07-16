@@ -14,7 +14,9 @@ class ScreeningController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the screenings.
+     *
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function index()
     {
@@ -22,9 +24,12 @@ class ScreeningController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created screening in storage.
+     *
+     * @param  StoreScreeningRequest  $request The store screening request.
+     * @return Screening The created screening.
      */
-    public function store(StoreScreeningRequest $request): mixed
+    public function store(StoreScreeningRequest $request): Screening
     {
         $screening = Screening::create([
             'movie_id' => $request->movie_id,
@@ -37,7 +42,10 @@ class ScreeningController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified screening.
+     *
+     * @param  Screening  $screening The screening to display.
+     * @return Screening The specified screening.
      */
     public function show(Screening $screening): Screening
     {
@@ -45,9 +53,13 @@ class ScreeningController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified screening in storage.
+     *
+     * @param  UpdateScreeningRequest  $request The update screening request.
+     * @param  Screening  $screening The screening to update.
+     * @return Screening The updated screening.
      */
-    public function update(UpdateScreeningRequest $request, Screening $screening)
+    public function update(UpdateScreeningRequest $request, Screening $screening): Screening
     {
         $screening->update([
             'movie_id' => $request->movie_id,
@@ -60,7 +72,10 @@ class ScreeningController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified screening from storage.
+     *
+     * @param  Screening  $screening The screening to remove.
+     * @return bool True if the screening is successfully deleted, false otherwise.
      */
     public function destroy(Screening $screening): bool
     {

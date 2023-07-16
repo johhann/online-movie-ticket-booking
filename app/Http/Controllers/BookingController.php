@@ -12,7 +12,9 @@ use Illuminate\Routing\Controller;
 class BookingController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the bookings.
+     *
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function index()
     {
@@ -20,14 +22,18 @@ class BookingController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created booking in storage.
+     *
+     * @param  StoreBookingRequest  $request The store booking request.
+     * @return Booking The created booking.
+     *
+     * @throws NoSeatsAvailableException If no seats are available for the screening.
      */
-    public function store(StoreBookingRequest $request): mixed
+    public function store(StoreBookingRequest $request): Booking
     {
         $screening = Screening::where('id', $request->screening_id)->withCount('bookings')->first();
 
         if ($screening->total_seats > $screening->bookings_count) {
-
             $booking = Booking::create([
                 'screening_id' => $request->screening_id,
                 'user_id' => $request->user_id,
@@ -35,11 +41,15 @@ class BookingController extends Controller
 
             return $booking->fresh();
         }
+
         throw new NoSeatsAvailableException();
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified booking.
+     *
+     * @param  Booking  $booking The booking to display.
+     * @return Booking The specified booking.
      */
     public function show(Booking $booking): Booking
     {
@@ -47,9 +57,13 @@ class BookingController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified booking in storage.
+     *
+     * @param  UpdateBookingRequest  $request The update booking request.
+     * @param  Booking  $booking The booking to update.
+     * @return Booking The updated booking.
      */
-    public function update(UpdateBookingRequest $request, Booking $booking)
+    public function update(UpdateBookingRequest $request, Booking $booking): Booking
     {
         $booking->update([
             'movie_id' => $request->movie_id,
@@ -60,7 +74,10 @@ class BookingController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified booking from storage.
+     *
+     * @param  Booking  $booking The booking to remove.
+     * @return bool True if the booking is successfully deleted, false otherwise.
      */
     public function destroy(Booking $booking): bool
     {

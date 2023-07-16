@@ -2,11 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\User;
-use App\Models\Screening;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Booking extends Model
 {
@@ -18,12 +16,13 @@ class Booking extends Model
 
     public static function booted()
     {
-        static::addGlobalScope('FilterData', function($model){
-            if(Auth::check()){
+        static::addGlobalScope('FilterData', function ($model) {
+            if (Auth::check()) {
                 return Auth::user()->role === 'ADMIN' ?
                     $model :
                     $model->where('user_id', Auth::id());
             }
+
             return $model;
         });
     }

@@ -4,16 +4,16 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 
-use App\Models\User;
-use App\Models\Movie;
 use App\Models\Booking;
+use App\Models\Movie;
 use App\Models\Screening;
-use App\Policies\UserPolicy;
-use App\Policies\MoviePolicy;
+use App\Models\User;
 use App\Policies\BookingPolicy;
+use App\Policies\MoviePolicy;
 use App\Policies\ScreeningPolicy;
-use Illuminate\Support\Facades\Gate;
+use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
